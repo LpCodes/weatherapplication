@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Homepage{% endblock title %}
+
+{% block home %}
+
+<div class="jumbotro jumbotron-fluid text-center bg-warning text-white">
+  <div class="container">
+    <h1 class="display-4" style="font-family: 'Chewy', cursive;">Weather App</h1>
+    <h3 class="lea ">Get the lates weather update of any city around the world.</h3>
+  </div>
+</div>
+
+<div class="container">
+<hr>
+  <form action="/" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      <h5 for="input" class="">Enter the City Name</h5>
+      <input type="text" class="form-control text-capitalize" aria-describedby="emailHelp" placeholder="city name" name="cityname"
+        required>
+
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block"> <strong>Search</strong></button>
+</div>
+
+</form>
+<hr>
+{% comment %} {{ city_weather_update}}
+<h2>{{city_weather_update.description }}</h2>  {% endcomment %}
+ {% if city_weather_update.check == True %}
+<div class="card container text-center bg-danger text-white mb-2 mt-1">
+  <div class="card-body">
+    <div class="float-end"><strong>{{ city_weather_update.time }}</strong></div>
+    <div class="card-text"><h2> Current weather of {{ city_weather_update.city }} {{ city_weather_update.country_code }}</h2></div>
+    {% if city_weather_update.description == 'smoke' %}
+    <img src="/static/img/smoke.jpeg" alt="" class=" img-thumbnail">
+    {% elif 'clear'  in city_weather_update.description %}
+    <img src="/static/img/clear.jpeg" alt="" class=" img-thumbnail">
+    {% elif 'clouds'  in city_weather_update.description %}
+    <img src="/static/img/clouds.jpeg" alt="" class=" img-thumbnail">
+    {% elif city_weather_update.description == 'thunder' %}
+    <img src="/static/img/thunder.jpeg" alt="" class=" img-thumbnail">
+    {% elif city_weather_update.description == 'drizzle' %}
+    <img src="/static/img/drizzle.jpeg" alt="" class=" img-thumbnail">
+    {% elif city_weather_update.description == 'dust' %}
+    <img src="/static/img/dust.jpeg" alt="" class=" img-thumbnail">
+    {% elif city_weather_update.description == 'fog' %}
+    <img src="/static/img/fog.jpeg" alt="" class=" img-thumbnail">
+    {% elif city_weather_update.description == 'haze' %}
+    <img src="/static/img/haze.jpeg" alt="" class=" img-thumbnail">
+    {% elif city_weather_update.description == 'mist' %}
+    <img src="/static/img/mist.jpeg" alt="" class=" img-thumbnail">
+    {% elif city_weather_update.description == 'rain' %}
+    <img src="/static/img/rain.jpg" alt="" class=" img-thumbnail">
+    {% elif city_weather_update.description == 'snow' %}
+    <img src="/static/img/sn" alt="" class=" img-thumbnail">
+    {% else %}
+    <img src="http://openweathermap.org/img/w/{{ city_weather_update.icon }}.png" alt="" class=" img-thumbnail">
+    {% endif %}
+    
+
+     
+      <div class="card-text"><h3>{{ city_weather_update.temperature }}</h3></div>
+      <div class="card-text"><h3>{{ city_weather_update.description | title }}</h3></div>
+      <div class="card-text"><h3>{{ city_weather_update.wind }}</h3></div>
+      <div class="card-text"><h3>{{ city_weather_update.humidity }}</h3></div>
+  </div>
+</div>
+{% else %}
+<div class="text-center bg-info text-white mt-3 container">
+  <div class="badge-pill">
+   <p> No Searches Yet.</p>
+  </div>
+{% endif %} 
+
+<hr>
+</div>
+
+{% endblock home %}
