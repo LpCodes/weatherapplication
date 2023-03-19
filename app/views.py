@@ -1,20 +1,15 @@
-import datetime
 from django.shortcuts import render
-
-# Create your views here.
 from django.http import HttpResponse
-from regex import T
+import datetime
 import requests
-
 
 def index(request):
     try:
         # checking if the method is POST
         if request.method == 'POST':
-
             poststatus = True
             API_KEY = '15edf62985d1cc636d5b71fef41aa3e9'
-            # getting th15edf62985d1cc636d5b71fef41aa3e9e city name from the form input
+            # getting the city name from the form input
             city_name = request.POST.get('cityname')
             print(city_name)
             # the url for current weather, takes city_name and API_KEY
@@ -38,13 +33,12 @@ def index(request):
                 'time': formatted_time,
                 'check': poststatus,
             }
-    # if the request method is GET empty the dictionary
+        # if the request method is GET, empty the dictionary
         else:
             city_weather_update = {}
         context = {'city_weather_update': city_weather_update}
         return render(request, 'home.html', context)
-# if there is an error the 404 page will be rendered
-# the except will catch all the errors
+    # if there is an error, render the 404 page
     except Exception as e:
         print(e)
         return render(request, '404.html')
